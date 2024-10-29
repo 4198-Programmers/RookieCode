@@ -16,4 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static final int MOTOR_LEFT_ONE_ID = 0;
+  public static final int MOTOR_RIGHT_ONE_ID = 0;
+  public static final int MOTOR_LEFT_TWO_ID = 0;
+  public static final int MOTOR_RIGHT_TWO_ID = 0;
+
+  public static final double WHEEL_DIAMETER = 8.5;
+  public static final double WHEEL_RADIUS = WHEEL_DIAMETER / 2;
+  public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
+
+  public static final int XBOX_CONTROLLER_PORT = 0;
 }
