@@ -40,10 +40,6 @@ public class DriveSubsystem extends SubsystemBase {
         tankDrive.arcadeDrive(xAxis, zRotate);
     }
 
-    public void deathSpin() {
-        tankDrive.arcadeDrive(0, 1);
-    }
-
     public double getRobotPosition() {
         double positionAverage = ((motorLeftFrontEncoder.getPosition() + motorRightFrontEncoder.getPosition() + motorLeftBackEncoder.getPosition() + motorRightBackEncoder.getPosition()) / (4 * Constants.WHEEL_CIRCUMFERENCE));
         return positionAverage;
