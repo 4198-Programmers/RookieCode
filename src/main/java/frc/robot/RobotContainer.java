@@ -12,6 +12,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -34,6 +36,11 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+  SendableChooser<Command> autoChooser = new SendableChooser<>();
+
+  
+
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -48,6 +55,12 @@ public class RobotContainer {
     // Commands
     DriveCommand driveCommand = new DriveCommand(xboxController, driveSubsystem);
     AutoDriveCommand autoDriveCommand = new AutoDriveCommand(driveSubsystem);
+
+    // Add the autoDriveCommand to the list of auto commands
+    autoChooser.setDefaultOption("Auto Drive Command", autoDriveCommand);
+
+    // Puts it on the program thingy
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
   }
@@ -81,6 +94,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.getSelected();
   }
 }
