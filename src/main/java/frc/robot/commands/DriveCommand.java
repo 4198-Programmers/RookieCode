@@ -20,4 +20,9 @@ public class DriveCommand extends Command {
     public void execute() {
         drive.drive(controller.getLeftY(), controller.getRightX());
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

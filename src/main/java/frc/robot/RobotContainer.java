@@ -6,12 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoDriveCommand;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,43 +24,29 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  // Subsystems
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-
-
-
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // Controllers
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  SendableChooser<Command> autoChooser = new SendableChooser<>();
+  // Commands
+  private final DriveCommand m_driveCommand = new DriveCommand(m_driverController, m_driveSubsystem);
+  private final AutoDriveCommand m_autoDriveCommand = new AutoDriveCommand(m_driveSubsystem);
 
-  
+  // Initialize autonomous commands list
+  SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
-  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    configureAutonomousChooser();
 
-    // Joysticks
-    CommandXboxController xboxController = new CommandXboxController(Constants.XBOX_CONTROLLER_PORT);
-
-    // Subsystems
-    DriveSubsystem driveSubsystem = new DriveSubsystem();
-    
-    // Commands
-    DriveCommand driveCommand = new DriveCommand(xboxController, driveSubsystem);
-    AutoDriveCommand autoDriveCommand = new AutoDriveCommand(driveSubsystem);
-
-    // Add the autoDriveCommand to the list of auto commands
-    autoChooser.setDefaultOption("Auto Drive Command", autoDriveCommand);
-
-    // Puts it on the program thingy
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-
-
+    m_driveCommand.schedule();
   }
 
   /**
@@ -87,6 +71,11 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
+  private void configureAutonomousChooser() {
+    m_autoChooser.setDefaultOption("Auto Drive Command", m_autoDriveCommand);
+    SmartDashboard.putData("Auto Chooser", m_autoChooser);
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -94,6 +83,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return autoChooser.getSelected();
+    return m_autoChooser.getSelected();
   }
 }

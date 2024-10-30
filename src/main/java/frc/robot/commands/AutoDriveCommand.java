@@ -27,10 +27,10 @@ public class AutoDriveCommand extends Command {
     @Override
     public void execute() {
 
-        if (drive.getRobotPosition() >= Maths.rotationConversion(distance)) {
-            end(true);
-        } else {
+        if (drive.getRobotPosition() <= Maths.rotationConversion(distance)) {
             drive.drive(0, speed);
+        } else {
+            end(true);
         }
     }
 
