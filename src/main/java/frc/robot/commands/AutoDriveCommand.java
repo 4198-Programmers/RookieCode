@@ -19,10 +19,11 @@ public class AutoDriveCommand extends Command {
         addRequirements(drive);
     }
 
-    // Do I need to reset the encoders every time it initializes?
-    // public void initialize() {
-    //     drive.resetEncoders();
-    // }
+    // Reset Encoders to 0
+    @Override
+    public void initialize() {
+        drive.resetEncoders();
+    }
 
     @Override
     public void execute() {

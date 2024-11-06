@@ -40,6 +40,16 @@ public class DriveSubsystem extends SubsystemBase {
         tankDrive.arcadeDrive(xAxis, zRotate);
     }
 
+
+
+    // Resets Encoders
+    public void resetEncoders() {
+        motorLeftFrontEncoder.setPosition(0);
+        motorLeftBackEncoder.setPosition(0);
+        motorRightFrontEncoder.setPosition(0);
+        motorRightBackEncoder.setPosition(0);
+    }
+    // Gets average amount of motor rotations
     public double getRobotPosition() {
         double positionAverage = ((motorLeftFrontEncoder.getPosition() + motorRightFrontEncoder.getPosition() + motorLeftBackEncoder.getPosition() + motorRightBackEncoder.getPosition()) / (4 * Constants.WHEEL_CIRCUMFERENCE));
         return positionAverage;

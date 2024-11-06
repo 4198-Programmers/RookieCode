@@ -15,6 +15,11 @@ public class DriveCommand extends Command {
         addRequirements(drive);
     }
     
+    // Reset Encoders to 0
+    @Override
+    public void initialize() {
+        drive.resetEncoders();
+    }
     // Executes the command to drive
     @Override
     public void execute() {
