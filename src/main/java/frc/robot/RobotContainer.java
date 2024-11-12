@@ -5,12 +5,18 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoDriveCommand;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +28,23 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+    // joysticks
+  CommandXboxController xboxController = new CommandXboxController(Constants.XBOX_CONTROLLER);
+
+    //Subsystems
+  driveTrain driveTrain = new driveTrain();
+
+    //Commands
+  DriveCommand DriveCommand = new DriveCommand(xboxController, driveTrain);
+  AutoDriveCommand autoDriveCommand = new AutoDriveCommand(driveTrain);
+
+    //Sendable Chooser Class
+  SendableChooser<Command> m_autoChooser = new SendableChooser();
+
+  private void configureAutomanousChooser(){
+    m_autoChooser.setDefaultOption("autoDrive", autoDriveCommand);
+  }
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -30,6 +53,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    configureAutomanousChooser();
+    DriveCommand.schedule();
   }
 
   /**
@@ -58,6 +83,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_autoChooser.getSelected();
+
   }
 }
