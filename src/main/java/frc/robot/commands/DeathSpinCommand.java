@@ -1,36 +1,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.Maths;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoDriveCommand extends Command {
-
+public class DeathSpinCommand extends Command {
+    CommandXboxController controller;
     private DriveSubsystem drive;
 
-    double distance = 50; // Inches
-    double speed = 0.5 * Constants.SPEED_CAP; // -1.0 <= Speed <= 1.0
+    double rotationSpeed = 1 * Constants.SPEED_CAP;
 
-    public AutoDriveCommand(DriveSubsystem drive) {
+    public DeathSpinCommand(DriveSubsystem drive) {
         this.drive = drive;
 
         addRequirements(drive);
     }
-
-    // Reset Encoders to 0
+    
+    // Reset Encoders to 0 rotations
     @Override
     public void initialize() {
         drive.resetEncoders();
     }
-
+    
+    // Executes the command to drive
     @Override
     public void execute() {
-        if (drive.getRobotPosition() <= Maths.rotationConversion(distance)) {
-            drive.drive(0, speed);
-        } else {
-            end(true);
-        }
+        drive.drive(rotationSpeed, 0);
     }
 
     @Override
@@ -40,6 +36,6 @@ public class AutoDriveCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return drive.getRobotPosition() >= Maths.rotationConversion(distance);
+        return false;
     }
 }

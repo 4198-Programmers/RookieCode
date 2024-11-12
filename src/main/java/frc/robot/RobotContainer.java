@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoDriveCommand;
+import frc.robot.commands.DeathSpinCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -25,6 +26,7 @@ public class RobotContainer {
   // Intialize Commands
   private final DriveCommand m_driveCommand = new DriveCommand(m_driverController, m_driveSubsystem);
   private final AutoDriveCommand m_autoDriveCommand = new AutoDriveCommand(m_driveSubsystem);
+  private final DeathSpinCommand m_deathSpinCommand = new DeathSpinCommand(m_driveSubsystem);
 
   // Initialize autonomous commands list
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
@@ -48,8 +50,10 @@ public class RobotContainer {
   }
 
   private void configureAutonomousChooser() {
-    m_autoChooser.setDefaultOption("Auto Drive Command", m_autoDriveCommand);
-    SmartDashboard.putData("Autonomous Command Chooser", m_autoChooser);
+    m_autoChooser.setDefaultOption("Auto Drive", m_autoDriveCommand);
+    m_autoChooser.addOption("Death Spin", m_deathSpinCommand);
+
+    SmartDashboard.putData("Auto Chooser", m_autoChooser);
   }
 
   public Command getAutonomousCommand() {
