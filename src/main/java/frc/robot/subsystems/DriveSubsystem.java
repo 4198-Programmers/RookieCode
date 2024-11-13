@@ -11,28 +11,28 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 
     // Initialize motors
-    private CANSparkMax motorFrontLeft = new CANSparkMax(Constants.MOTOR_FRONT_LEFT_ID, MotorType.kBrushless);
-    private CANSparkMax motorBackLeft = new CANSparkMax(Constants.MOTOR_BACK_LEFT_ID, MotorType.kBrushless);
+    private CANSparkMax frontLeftMotor = new CANSparkMax(Constants.FRONT_LEFT_DRIVE_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax backLeftMotor = new CANSparkMax(Constants.BACK_LEFT_DRIVE_MOTOR_ID, MotorType.kBrushless);
 
-    private CANSparkMax motorFrontRight = new CANSparkMax(Constants.MOTOR_FRONT_RIGHT_ID, MotorType.kBrushless);
-    private CANSparkMax motorBackRight = new CANSparkMax(Constants.MOTOR_BACK_RIGHT_ID, MotorType.kBrushless);
+    private CANSparkMax frontRightMotor = new CANSparkMax(Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax backRightMotor = new CANSparkMax(Constants.BACK_RIGHT_DRIVE_MOTOR_ID, MotorType.kBrushless);
 
     // How many times it spun
-    private RelativeEncoder motorFrontLeftEncoder = motorFrontLeft.getEncoder();
-    private RelativeEncoder motorBackLeftEncoder = motorBackLeft.getEncoder();
+    private RelativeEncoder frontLeftMotorEncoder = frontLeftMotor.getEncoder();
+    private RelativeEncoder backLeftMotorEncoder = backLeftMotor.getEncoder();
 
-    private RelativeEncoder motorFrontRightEncoder = motorFrontRight.getEncoder();
-    private RelativeEncoder motorBackRightEncoder = motorBackRight.getEncoder();
+    private RelativeEncoder frontRightMotorEncoder = frontRightMotor.getEncoder();
+    private RelativeEncoder backRightMotorEncoder = backRightMotor.getEncoder();
 
     // Groups left and right motors to "leftTankTreadSpeed" and "rightTankTreadSpeed"
     DifferentialDrive tankDrive = new DifferentialDrive(
         (double leftTankTreadSpeed) -> {
-            motorFrontLeft.set(leftTankTreadSpeed);
-            motorBackLeft.set(leftTankTreadSpeed);
+            frontLeftMotor.set(leftTankTreadSpeed);
+            backLeftMotor.set(leftTankTreadSpeed);
         },
         (double rightTankTreadSpeed) -> {
-            motorFrontRight.set(rightTankTreadSpeed);
-            motorBackRight.set(rightTankTreadSpeed);
+            frontRightMotor.set(rightTankTreadSpeed);
+            backRightMotor.set(rightTankTreadSpeed);
         }
     );
 
@@ -42,14 +42,14 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Resets Encoders
     public void resetEncoders() {
-        motorFrontLeftEncoder.setPosition(0);
-        motorBackLeftEncoder.setPosition(0);
-        motorFrontRightEncoder.setPosition(0);
-        motorBackRightEncoder.setPosition(0);
+        frontLeftMotorEncoder.setPosition(0);
+        backLeftMotorEncoder.setPosition(0);
+        frontRightMotorEncoder.setPosition(0);
+        backRightMotorEncoder.setPosition(0);
     }
     // Gets average amount of motor rotations
     public double getRobotPosition() {
-        double positionAverage = ((motorFrontLeftEncoder.getPosition() + motorFrontRightEncoder.getPosition() + motorBackLeftEncoder.getPosition() + motorBackRightEncoder.getPosition()) / (4 * Constants.WHEEL_CIRCUMFERENCE));
+        double positionAverage = ((frontLeftMotorEncoder.getPosition() + frontRightMotorEncoder.getPosition() + backLeftMotorEncoder.getPosition() + backRightMotorEncoder.getPosition()) / (4 * Constants.WHEEL_CIRCUMFERENCE));
         return positionAverage;
     }
 }
