@@ -25,7 +25,7 @@ public class DriveCommand extends Command {
     // Executes the command to drive
     @Override
     public void execute() {
-        drive.drive(controller.getLeftY() * Constants.SPEED_CAP, controller.getRightX() * Constants.SPEED_CAP);
+        drive.drive(controller.getLeftY() * Constants.DRIVE_SPEED_CAP, controller.getRightX() * Constants.DRIVE_SPEED_CAP);
     }
 
     @Override

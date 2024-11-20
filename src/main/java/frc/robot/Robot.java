@@ -80,6 +80,10 @@ public class Robot extends TimedRobot {
 
     // Schedule Teleop Drive Command every instance
     m_robotContainer.m_driveCommand.schedule();
+
+    m_robotContainer.m_launcherCommand.schedule();
+
+    m_robotContainer.m_intakeCommand.schedule();
   }
 
   /** This function is called periodically during operator control. */

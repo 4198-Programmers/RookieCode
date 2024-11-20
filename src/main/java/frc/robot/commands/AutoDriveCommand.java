@@ -10,7 +10,7 @@ public class AutoDriveCommand extends Command {
     private DriveSubsystem drive;
 
     double distance = 50; // Inches
-    double speed = 0.5 * Constants.SPEED_CAP; // -1.0 <= Speed <= 1.0
+    double speed = 0.5 * Constants.DRIVE_SPEED_CAP; // -1.0 <= Speed <= 1.0
 
     public AutoDriveCommand(DriveSubsystem drive) {
         this.drive = drive;

@@ -9,7 +9,7 @@ public class DeathSpinCommand extends Command {
     CommandXboxController controller;
     private DriveSubsystem drive;
 
-    double rotationSpeed = 1 * Constants.SPEED_CAP;
+    double rotationSpeed = 1 * Constants.DRIVE_SPEED_CAP;
 
     public DeathSpinCommand(DriveSubsystem drive) {
         this.drive = drive;

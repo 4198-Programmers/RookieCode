@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.LauncherANDIntakeSubsystem;
 
-public class LauncherCommand extends Command {
+public class IntakeCommand extends Command {
     LauncherANDIntakeSubsystem launcherSubsystem;
     CommandXboxController controller;
 
-    public LauncherCommand(CommandXboxController controller, LauncherANDIntakeSubsystem launcherSubsystem) {
+    public IntakeCommand(CommandXboxController controller, LauncherANDIntakeSubsystem launcherSubsystem) {
         this.controller = controller;
         this.launcherSubsystem = launcherSubsystem;
 
@@ -18,7 +18,8 @@ public class LauncherCommand extends Command {
 
     @Override
     public void execute() {
-        launcherSubsystem.setLauncherSpeed(Constants.LAUNCHER_SPEED);
+        launcherSubsystem.setLauncherSpeed(-Constants.LAUNCHER_SPEED);
+
     }
     
     @Override

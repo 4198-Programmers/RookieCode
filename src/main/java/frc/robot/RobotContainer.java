@@ -4,9 +4,10 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoDriveCommand;
 import frc.robot.commands.DeathSpinCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.LauncherANDIntakeSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,7 +17,7 @@ public class RobotContainer {
 
   // Initialize Subsystems
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
+  private final LauncherANDIntakeSubsystem m_launcherSubsystem = new LauncherANDIntakeSubsystem();
 
   // Intialize Controllers
   private final CommandXboxController m_driverController =
@@ -24,9 +25,11 @@ public class RobotContainer {
 
   // Intialize Commands
   public final DriveCommand m_driveCommand = new DriveCommand(m_driverController, m_driveSubsystem);
+  public final LauncherCommand m_launcherCommand = new LauncherCommand(m_driverController, m_launcherSubsystem);
+  public final IntakeCommand m_intakeCommand = new IntakeCommand(m_driverController, m_launcherSubsystem);
+
   private final AutoDriveCommand m_autoDriveCommand = new AutoDriveCommand(m_driveSubsystem);
   private final DeathSpinCommand m_deathSpinCommand = new DeathSpinCommand(m_driveSubsystem);
-  private final LauncherCommand m_launcherCommand = new LauncherCommand(m_driverController, m_launcherSubsystem);
 
 
   // Initialize autonomous commands list
@@ -39,8 +42,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // Link Launcher to A button here
-    m_driverController.a().onTrue(m_launcherCommand);
+    // Link Launcher and intake to triggers
+    m_driverController.rightTrigger().whileTrue(m_launcherCommand);
+    m_driverController.leftTrigger().whileTrue(m_intakeCommand);
   }
 
   private void configureAutonomousChooser() {
