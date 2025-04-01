@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
-import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCommand {
     DriveSubsystem driveSubsystem;
-    double speed;
+    CommandXboxController controller;
 
-    public DriveCommand(DriveSubsystem driveSubsystem, double speed) {
+    public DriveCommand(DriveSubsystem driveSubsystem, CommandXboxController controller) {
         this.driveSubsystem = driveSubsystem;
-        this.speed = speed;
+        this.controller = controller;
     }
 
     public void execute() {
-        driveSubsystem.drive(RobotContainer.xboxController.getX(), RobotContainer.xboxController.getY());
+        driveSubsystem.drive(controller.getRightY(), controller.getLeftX());
     }
 
     public void end() {

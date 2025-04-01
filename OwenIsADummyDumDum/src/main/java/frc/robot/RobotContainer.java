@@ -4,10 +4,8 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,17 +19,31 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  // Define Joysticks and/or Controllers
+  public final CommandXboxController xboxController;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  public final CommandXboxController xboxController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // Define Subsystems
+  private final ExampleSubsystem m_exampleSubsystem;
+  private final DriveSubsystem driveSubsystem;
+
+  // Define Commands
+  private final DriveCommand driveCommand;
+
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+    // Make joysticks/controllers
+    xboxController = new CommandXboxController(Constants.CONTROLLER_PORT);
+
+    // Make subsystems
+    m_exampleSubsystem = new ExampleSubsystem();
+    driveSubsystem = new DriveSubsystem();
+
+    // Make commands
+    driveCommand = new DriveCommand(driveSubsystem, xboxController);
+
+    // Configure the button bindings
     configureBindings();
   }
 
@@ -45,9 +57,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    xboxController.a().whileTrue(new DriveCommand(driveSubsystem, Constants.DRIVE_SPEED));
+    
   }
 
   /**
