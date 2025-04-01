@@ -23,11 +23,11 @@ public class RobotContainer {
   public final CommandXboxController xboxController;
 
   // Define Subsystems
-  private final ExampleSubsystem m_exampleSubsystem;
-  private final DriveSubsystem driveSubsystem;
+  private ExampleSubsystem m_exampleSubsystem;
+  private DriveSubsystem driveSubsystem;
 
   // Define Commands
-  private final DriveCommand driveCommand;
+  public DriveCommand driveCommand;
 
   
 
@@ -57,7 +57,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    
+
   }
 
   /**

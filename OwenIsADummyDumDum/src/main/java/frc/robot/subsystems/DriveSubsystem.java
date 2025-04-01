@@ -5,8 +5,9 @@ import com.revrobotics.spark.SparkMax;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveSubsystem {
+public class DriveSubsystem extends SubsystemBase {
     
     private SparkMax motorOne;
     private SparkMax motorTwo;
