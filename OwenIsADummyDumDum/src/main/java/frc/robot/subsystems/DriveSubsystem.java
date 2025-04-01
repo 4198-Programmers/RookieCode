@@ -13,16 +13,27 @@ public class DriveSubsystem {
     private SparkMax motorThree;
     private SparkMax motorFour;
 
+    DifferentialDrive tankDrive;
+
     public DriveSubsystem() {
         motorOne = new SparkMax(Constants.MOTOR_ONE_ID, MotorType.kBrushless);
         motorTwo = new SparkMax(Constants.MOTOR_TWO_ID, MotorType.kBrushless);
         motorThree = new SparkMax(Constants.MOTOR_THREE_ID, MotorType.kBrushless);
         motorFour = new SparkMax(Constants.MOTOR_FOUR_ID, MotorType.kBrushless);
 
-        DifferentialDrive tankDrive = new DifferentialDrive(motorOne, motorTwo);
+        tankDrive = new DifferentialDrive(
+            (double leftMotorSpeed) -> {
+                motorOne.set(leftMotorSpeed);
+                motorThree.set(leftMotorSpeed);
+            }, 
+            (double rightMotorSpeed) -> {
+                motorTwo.set(rightMotorSpeed);
+                motorFour.set(rightMotorSpeed);
+            }
+        );
     }
 
-    public void drive(double speed, double rotation) {
-        tankDrive.arcadeDrive(speed, rotation);
+    public void drive(double xSpeed, double zRotation) {
+        tankDrive.arcadeDrive(xSpeed, zRotation);
     }
 }
