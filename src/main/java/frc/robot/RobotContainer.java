@@ -8,6 +8,9 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -29,18 +32,18 @@ public class RobotContainer {
   // Define Commands
   public DriveCommand driveCommand;
 
-  
+  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Make joysticks/controllers
+    // Initialize joysticks/controllers
     xboxController = new CommandXboxController(Constants.CONTROLLER_PORT);
 
-    // Make subsystems
+    // Initialize subsystems
     m_exampleSubsystem = new ExampleSubsystem();
     driveSubsystem = new DriveSubsystem();
 
-    // Make commands
+    // Initialize commands
     driveCommand = new DriveCommand(driveSubsystem, xboxController);
 
     // Configure the button bindings
@@ -60,6 +63,12 @@ public class RobotContainer {
 
   }
 
+  private void configureAutoChooser() {
+    // autoChooser.setDefaultOption("NAME", autoCommand);
+    // autoChooser.addOption("NAME", autoCommand);
+    // SmartDashboard.putData(autoChooser);
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -67,6 +76,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.getSelected();
   }
 }
