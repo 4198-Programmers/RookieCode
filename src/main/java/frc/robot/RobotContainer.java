@@ -4,11 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.commands.Autos;
+import frc.robot.commands.AutoDriveCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,13 +24,13 @@ public class RobotContainer {
   public final CommandXboxController xboxController;
 
   // Define Subsystems
-  private ExampleSubsystem m_exampleSubsystem;
   private DriveSubsystem driveSubsystem;
 
   // Define Commands
   public DriveCommand driveCommand;
+  public AutoDriveCommand autoDriveCommand;
 
-  SendableChooser<Command> autoChooser = new SendableChooser<>();
+  SendableChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,12 +38,14 @@ public class RobotContainer {
     xboxController = new CommandXboxController(Constants.CONTROLLER_PORT);
 
     // Initialize subsystems
-    m_exampleSubsystem = new ExampleSubsystem();
     driveSubsystem = new DriveSubsystem();
 
     // Initialize commands
     driveCommand = new DriveCommand(driveSubsystem, xboxController);
+    autoDriveCommand = new AutoDriveCommand(driveSubsystem, 24);
 
+    // Configure the SendableChooser
+    configureAutoChooser();
     // Configure the button bindings
     configureBindings();
   }
@@ -59,19 +59,19 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {
+  private void configureBindings() {}
 
-  }
-
+  /**
+   * Configures the SendableChooser by defining the chooser, adding commands, then putting them on the dashboard.
+   */
   private void configureAutoChooser() {
-    // autoChooser.setDefaultOption("NAME", autoCommand);
-    // autoChooser.addOption("NAME", autoCommand);
-    // SmartDashboard.putData(autoChooser);
+    autoChooser = new SendableChooser<>();
+    autoChooser.setDefaultOption("Auto Drive Command", autoDriveCommand);
+    SmartDashboard.putData(autoChooser);
   }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
