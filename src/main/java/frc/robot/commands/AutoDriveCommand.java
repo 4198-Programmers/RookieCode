@@ -31,9 +31,4 @@ public class AutoDriveCommand extends Command {
             driveSubsystem.drive(direction * Constants.DRIVE_SPEED, 0);
         }
     }
-
-    public void end(boolean interrupted) {
-        // Stop the robot
-        driveSubsystem.drive(0, 0);
-    }
 }

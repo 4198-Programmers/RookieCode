@@ -21,7 +21,7 @@ public final class Constants {
   public static final int MOTOR_FOUR_ID = 4;
 
   // Measurements(inches)
-  public static final double WHEEL_DIAMETER = 0;
+  public static final double WHEEL_DIAMETER = 7.5;
   public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
   // Miscellaneous

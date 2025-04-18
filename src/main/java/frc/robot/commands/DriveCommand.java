@@ -21,12 +21,8 @@ public class DriveCommand extends Command {
     }
 
     // Execute the command to drive every instance
+    @Override
     public void execute() {
-        driveSubsystem.drive(controller.getRightY() * Constants.DRIVE_SPEED, controller.getLeftX() * Constants.DRIVE_SPEED);
-    }
-
-    // Stop the robot from moving when the command ends
-    public void end(boolean interrupted) {
-        driveSubsystem.drive(0, 0);
+        driveSubsystem.drive(controller.getLeftY() * Constants.DRIVE_SPEED, controller.getRightX() * Constants.DRIVE_SPEED);
     }
 }
