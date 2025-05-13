@@ -40,7 +40,7 @@ public class SwerveModule extends SubsystemBase {
         
         relativeDriveEncoder = driveMotor.getEncoder();
         relativeAngleEncoder = angleMotor.getEncoder();
-        absoluteAngleEncoder = new CANcoder(angleMotorID);
+        absoluteAngleEncoder = new CANcoder(absoluteEncoderID);
 
         angleMotorConfig = new SparkMaxConfig();
         driveMotorConfig = new SparkMaxConfig();
@@ -52,7 +52,7 @@ public class SwerveModule extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20);
         angleMotorConfig.closedLoop
-                .pid(1, 0, 0)
+                .pid(0.01, 0, 0)
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .outputRange(-1,1)
                 .positionWrappingInputRange(0,1)
@@ -62,10 +62,6 @@ public class SwerveModule extends SubsystemBase {
 
         driveMotorConfig
                 .idleMode(IdleMode.kBrake);
-        driveMotorConfig.closedLoop
-                .pid(1, 0, 0)
-                .outputRange(-1, 1)
-                .positionWrappingEnabled(false);
         driveMotorConfig.encoder
                 .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO)
                 .velocityConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
@@ -73,6 +69,8 @@ public class SwerveModule extends SubsystemBase {
         absoluteEncoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
         absoluteEncoderConfig.MagnetSensor.MagnetOffset = angleOffset;
         absoluteEncoderConfig.MagnetSensor.withSensorDirection(Constants.ABSOLUTE_SENSOR_DIRECTION);
+
+        absoluteAngleEncoder.getConfigurator().apply(absoluteEncoderConfig);
 
         driveMotor.configure(driveMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         angleMotor.configure(angleMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -82,7 +80,17 @@ public class SwerveModule extends SubsystemBase {
 
     private void resetToAbsolute() {
         Rotation2d position = Rotation2d.fromRotations(absoluteAngleEncoder.getPosition().getValueAsDouble());
+        // System.out.println(absoluteAngleEncoder.getAbsolutePosition().getValueAsDouble());
         relativeAngleEncoder.setPosition(position.getRotations());
+        // relativeAngleEncoder.setPosition(1);
+        // System.out.println("Ran?");
+        // System.out.println(position);
+        System.out.println(relativeAngleEncoder.getPosition());
+    }
+
+    @Override
+    public void periodic() {
+        System.out.println(relativeAngleEncoder.getPosition());
     }
 
     public SwerveModulePosition getPosition() {
