@@ -63,8 +63,7 @@ public class SwerveModule extends SubsystemBase {
         driveMotorConfig
                 .idleMode(IdleMode.kBrake);
         driveMotorConfig.encoder
-                .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO)
-                .velocityConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
+                .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
 
         absoluteEncoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
         absoluteEncoderConfig.MagnetSensor.MagnetOffset = angleOffset;
@@ -76,10 +75,11 @@ public class SwerveModule extends SubsystemBase {
         angleMotor.configure(angleMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         resetToAbsolute();
+        
     }
 
     private void resetToAbsolute() {
-        Rotation2d position = Rotation2d.fromRotations(absoluteAngleEncoder.getPosition().getValueAsDouble());
+        Rotation2d position = Rotation2d.fromRotations(absoluteAngleEncoder.getAbsolutePosition().getValueAsDouble());
         // System.out.println(absoluteAngleEncoder.getAbsolutePosition().getValueAsDouble());
         relativeAngleEncoder.setPosition(position.getRotations());
         // relativeAngleEncoder.setPosition(1);

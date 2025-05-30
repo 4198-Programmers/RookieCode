@@ -72,7 +72,7 @@ public class SwerveSubsytem extends SubsystemBase {
         if(fieldOriented) {
             states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed * Constants.MAX_ROTATIONAL_VELOCITY, gyro.getRotation2d()));
         } else {
-            states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeed, ySpeed, zSpeed));
+            states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeed * Constants.MAX_VELOCITY_MPS, ySpeed * Constants.MAX_VELOCITY_MPS, zSpeed / 5));
         } 
         setModuleStates(states);
     }
