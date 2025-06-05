@@ -104,7 +104,7 @@ public class SwerveModule extends SubsystemBase {
     public void setDesiredState(SwerveModuleState desiredState) {
         desiredState.optimize(getAngle());
         anglePID.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
-        angleMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
+        driveMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
     }
     
 
