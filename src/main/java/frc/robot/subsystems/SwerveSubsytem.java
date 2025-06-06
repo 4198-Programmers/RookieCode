@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -70,7 +71,7 @@ public class SwerveSubsytem extends SubsystemBase {
     public void drive(double xSpeed, double ySpeed, double zSpeed, boolean fieldOriented){
         SwerveModuleState[] states;
         if(fieldOriented) {
-            states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, zSpeed * Constants.MAX_ROTATIONAL_VELOCITY, gyro.getRotation2d()));
+            states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed * Constants.MAX_VELOCITY_MPS, ySpeed * Constants.MAX_VELOCITY_MPS, Units.degreesToRadians(zSpeed * 360), gyro.getRotation2d()));
         } else {
             states = Constants.SWERVE_DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeed * Constants.MAX_VELOCITY_MPS, ySpeed * Constants.MAX_VELOCITY_MPS, zSpeed / 5));
         } 
