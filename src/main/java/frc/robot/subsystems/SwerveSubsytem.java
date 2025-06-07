@@ -25,22 +25,26 @@ public class SwerveSubsytem extends SubsystemBase {
                 Constants.FRONT_LEFT_DRIVE_MOTOR_ID, 
                 Constants.FRONT_LEFT_ANGLE_MOTOR_ID,
                 Constants.FRONT_LEFT_ANGLE_ENCODER_ID, 
-                Constants.FRONT_LEFT_ANGLE_OFFSET);
+                Constants.FRONT_LEFT_ANGLE_OFFSET,
+                1);
         frontRightSwerveModule = new SwerveModule(
                 Constants.FRONT_RIGHT_DRIVE_MOTOR_ID, 
                 Constants.FRONT_RIGHT_ANGLE_MOTOR_ID, 
                 Constants.FRONT_RIGHT_ANGLE_ENCODER_ID, 
-                Constants.FRONT_RIGHT_ANGLE_OFFSET);
+                Constants.FRONT_RIGHT_ANGLE_OFFSET,
+                2);
         backLeftSwerveModule = new SwerveModule(
                 Constants.BACK_LEFT_DRIVE_MOTOR_ID, 
                 Constants.BACK_LEFT_ANGLE_MOTOR_ID, 
                 Constants.BACK_LEFT_ANGLE_ENCODER_ID, 
-                Constants.BAKC_LEFT_ANGLE_OFFSET);
+                Constants.BAKC_LEFT_ANGLE_OFFSET,
+                3);
         backRightSwerveModule = new SwerveModule(
                 Constants.BACK_RIGHT_DRIVE_MOTOR_ID, 
                 Constants.BACK_RIGHT_ANGLE_MOTOR_ID, 
                 Constants.BACK_RIGHT_ANGLE_ENCODER_ID, 
-                Constants.BACK_RIGHT_ANGLE_OFFSET);
+                Constants.BACK_RIGHT_ANGLE_OFFSET,
+                4);
 
         odometry = new SwerveDriveOdometry(Constants.SWERVE_DRIVE_KINEMATICS, gyro.getRotation2d().times(-1), getSwerveModulePositions());
         resetGyro();

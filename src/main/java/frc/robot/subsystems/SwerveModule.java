@@ -33,8 +33,9 @@ public class SwerveModule extends SubsystemBase {
     private Rotation2d angleOffset;
     private SwerveModuleState desiredState;
     private SparkClosedLoopController anglePID;
+    private int moduleNumber;
 
-    public SwerveModule(int driveMotorID, int angleMotorID, int absoluteEncoderID, double angleOffset) {
+    public SwerveModule(int driveMotorID, int angleMotorID, int absoluteEncoderID, double angleOffset, int ModuleNumber) {
         driveMotor = new SparkMax(driveMotorID, MotorType.kBrushless);
         angleMotor = new SparkMax(angleMotorID, MotorType.kBrushless);
         
@@ -52,7 +53,7 @@ public class SwerveModule extends SubsystemBase {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20);
         angleMotorConfig.closedLoop
-                .pid(0.01, 0, 0)
+                .pid(5, 0, 0.1)
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .outputRange(-1,1)
                 .positionWrappingInputRange(0,1)
@@ -74,6 +75,8 @@ public class SwerveModule extends SubsystemBase {
         driveMotor.configure(driveMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         angleMotor.configure(angleMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+        this.moduleNumber = moduleNumber;
+
         resetToAbsolute();
         
     }
@@ -85,12 +88,12 @@ public class SwerveModule extends SubsystemBase {
         // relativeAngleEncoder.setPosition(1);
         // System.out.println("Ran?");
         // System.out.println(position);
-        System.out.println(relativeAngleEncoder.getPosition());
+        // System.out.println(relativeAngleEncoder.getPosition());
     }
 
     @Override
     public void periodic() {
-        System.out.println(relativeAngleEncoder.getPosition());
+        // System.out.println("Module: " + moduleNumber + " Position: " + relativeAngleEncoder.getPosition());
     }
 
     public SwerveModulePosition getPosition() {
@@ -104,9 +107,9 @@ public class SwerveModule extends SubsystemBase {
     public void setDesiredState(SwerveModuleState desiredState) {
         desiredState.optimize(getAngle());
         anglePID.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
-        driveMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
+        System.out.println(desiredState.speedMetersPerSecond);
+        // driveMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
+        driveMotor.set(desiredState.speedMetersPerSecond);
     }
     
-
-
 }

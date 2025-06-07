@@ -39,7 +39,7 @@ public class RobotContainer {
         swerveSubsytem,
         () -> lefJoystick.getY(),
         () -> lefJoystick.getX(),
-        () -> middleJoystick.getY(),
+        () -> middleJoystick.getX(),
         true));
     // Configure the trigger bindings
     configureBindings();

@@ -38,7 +38,7 @@ public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hyp
 public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
 public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
 public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
-public static final double FRONT_LEFT_ANGLE_OFFSET = 0.192138671875;
+public static final double FRONT_LEFT_ANGLE_OFFSET = 0.380859375;
 
 //Swerve Front Right
 public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
