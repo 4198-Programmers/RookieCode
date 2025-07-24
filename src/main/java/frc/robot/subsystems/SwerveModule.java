@@ -17,6 +17,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -35,7 +36,7 @@ public class SwerveModule extends SubsystemBase {
     private SparkClosedLoopController anglePID;
     private int moduleNumber;
 
-    public SwerveModule(int driveMotorID, int angleMotorID, int absoluteEncoderID, double angleOffset, int ModuleNumber) {
+    public SwerveModule(int driveMotorID, int angleMotorID, int absoluteEncoderID, double angleOffset, int moduleNumber) {
         driveMotor = new SparkMax(driveMotorID, MotorType.kBrushless);
         angleMotor = new SparkMax(angleMotorID, MotorType.kBrushless);
         
@@ -62,9 +63,11 @@ public class SwerveModule extends SubsystemBase {
                 .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
 
         driveMotorConfig
-                .idleMode(IdleMode.kBrake);
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(40);
         driveMotorConfig.encoder
-                .positionConversionFactor(Constants.SWERVE_ANGLE_GEAR_RATIO);
+                .positionConversionFactor(Constants.SWERVE_DRIVE_GEAR_RATIO)
+                .velocityConversionFactor(Constants.SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR);
 
         absoluteEncoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
         absoluteEncoderConfig.MagnetSensor.MagnetOffset = angleOffset;
@@ -93,7 +96,7 @@ public class SwerveModule extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // System.out.println("Module: " + moduleNumber + " Position: " + relativeAngleEncoder.getPosition());
+        // System.out.println("Module: " + moduleNumber + " Velocity: " + relativeDriveEncoder.getVelocity());
     }
 
     public SwerveModulePosition getPosition() {
@@ -107,9 +110,14 @@ public class SwerveModule extends SubsystemBase {
     public void setDesiredState(SwerveModuleState desiredState) {
         desiredState.optimize(getAngle());
         anglePID.setReference(desiredState.angle.getRotations(), ControlType.kPosition);
-        System.out.println(desiredState.speedMetersPerSecond);
+        // System.out.println(desiredState.speedMetersPerSecond);
+        // System.out.println(driveMotor.getOutputCurrent());
         // driveMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
-        driveMotor.set(desiredState.speedMetersPerSecond);
+        driveMotor.set(desiredState.speedMetersPerSecond / Constants.MAX_VELOCITY_MPS);
+    }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(Units.feetToMeters(relativeDriveEncoder.getVelocity()), getAngle());
     }
     
 }

@@ -23,7 +23,13 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+public static final double WHEEL_DIAMETER = Units.inchesToMeters(4); // 4 inch diameter wheel
+
 public static final double SWERVE_ANGLE_GEAR_RATIO = 1 / 12.8;
+public static final double SWERVE_DRIVE_GEAR_RATIO = 1 / 6.75;
+
+// public static final double SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR = (WHEEL_DIAMETER * Math.PI) / SWERVE_DRIVE_GEAR_RATIO;
+public static final double SWERVE_DRIVE_VELOCITY_CONVERSION_FACTOR = SWERVE_DRIVE_GEAR_RATIO / 60;
 
 public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(29.75);  //Need to be distance between wheels
 public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(29.75);
@@ -38,7 +44,7 @@ public static final double MAX_ROTATIONAL_VELOCITY = MAX_VELOCITY_MPS / Math.hyp
 public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 1;
 public static final int FRONT_LEFT_ANGLE_MOTOR_ID = 2;
 public static final int FRONT_LEFT_ANGLE_ENCODER_ID = 13;
-public static final double FRONT_LEFT_ANGLE_OFFSET = 0.380859375;
+public static final double FRONT_LEFT_ANGLE_OFFSET = 0.372073125;
 
 //Swerve Front Right
 public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
@@ -87,4 +93,8 @@ public static final SwerveDriveKinematics SWERVE_DRIVE_KINEMATICS = new SwerveDr
 public static final SensorDirectionValue ABSOLUTE_SENSOR_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
 
 public static final double DEADBAND = 0.05;
+
+public static final int RESET_GYRO_BUTTON = 12;
+
+
 }
