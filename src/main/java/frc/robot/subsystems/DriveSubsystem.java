@@ -30,5 +30,9 @@ public class DriveSubsystem extends SubsystemBase{
 
 
     }
+    
+    public void mortalKombat(double speed, double rotation){
+        jereyDifferentialDrive.arcadeDrive(speed, rotation);
+    }
 }
  
